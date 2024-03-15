@@ -52,5 +52,5 @@ export function calculateColor(ratio: number) {
     green = Math.min(255 - (ratio - 0.5) * 2 * 255, 255);
     red = 255;
   }
-  return `rgb(${red}, ${green}, 0)`;
+  return `rgba(${red}, ${green}, 100, 0.5)`;
 }

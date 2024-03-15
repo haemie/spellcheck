@@ -2,6 +2,7 @@ import express from 'express';
 import gameRoutes from './routes/gameRoutes';
 import path from 'path';
 import session from 'express-session';
+import cors from 'cors';
 
 export default class App {
   private app: express.Application;
@@ -10,6 +11,7 @@ export default class App {
   constructor(port: number) {
     this.port = port;
     this.app = express();
+    this.app.use(cors());
     this.app.use(
       session({
         secret: 'secret',

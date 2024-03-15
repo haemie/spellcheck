@@ -81,7 +81,7 @@ export default class Game {
   }
 
   /**check submitted word argument against actual word */
-  public async checkWord(submittedWord: string) {
+  public checkWord(submittedWord: string) {
     // get a score for how close the submittedword is to this.word
     if (submittedWord === this.word) {
       return 1;
@@ -91,6 +91,7 @@ export default class Game {
       const maxdiff = this.word!.length;
       // get color from red to green depending on how close diff/maxdiff is from 0 or 1
       const resultColor = calculateColor(diff / maxdiff);
+      return resultColor;
     }
   }
 

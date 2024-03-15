@@ -44,7 +44,7 @@ const gameController: gameControllerType = {
     const { submittedWord } = req.body;
     const game = res.locals.game as Game;
     try {
-      game.checkWord(submittedWord);
+      res.locals.resultColor = game.checkWord(submittedWord);
       return next();
     } catch (err) {
       console.error(err);

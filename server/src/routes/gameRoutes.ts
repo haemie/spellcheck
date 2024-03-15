@@ -19,12 +19,13 @@ router.get(
   }
 );
 
-router.get(
+router.post(
   '/checkWord',
   gameController.getGame,
   gameController.checkWord,
   (req, res) => {
-    return res.status(200).json(res.locals.game.results);
+    console.log(res.locals.resultColor);
+    return res.status(200).json(res.locals.resultColor);
   }
 );
 
