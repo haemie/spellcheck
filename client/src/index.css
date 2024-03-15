@@ -28,6 +28,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  transition-duration: 0.5s;
 }
 
 h1 {
