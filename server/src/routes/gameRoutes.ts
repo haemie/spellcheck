@@ -20,14 +20,21 @@ router.get(
 );
 
 router.get(
-  '/getDefinition',
+  '/checkWord',
   gameController.getGame,
-  gameController.getDefinition,
+  gameController.checkWord,
   (req, res) => {
-    return res.status(200).json(res.locals.game.definition);
+    return res.status(200).json(res.locals.game.results);
   }
 );
 
-// router.get('/getDefinition', gameController.get)
+// router.get(
+//   '/getDefinition',
+//   gameController.getGame,
+//   gameController.getDefinition,
+//   (req, res) => {
+//     return res.status(200).json(res.locals.game.definition);
+//   }
+// );
 
 export default router;

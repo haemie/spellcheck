@@ -2,6 +2,7 @@ import { JSDOM } from 'jsdom';
 import dotenv from 'dotenv';
 dotenv.config();
 const dictApiKey = process.env.DICTIONARY_API_KEY;
+import { calculateDiff, calculateColor } from '../helper/levenshteinDist';
 
 export default class Game {
   public userid: string;
@@ -76,6 +77,20 @@ export default class Game {
       return this;
     } catch (err) {
       console.error(err);
+    }
+  }
+
+  /**check submitted word argument against actual word */
+  public async checkWord(submittedWord: string) {
+    // get a score for how close the submittedword is to this.word
+    if (submittedWord === this.word) {
+      return 1;
+    } else {
+      // score the input based on levenshtein distance
+      const diff = calculateDiff(submittedWord, this.word!);
+      const maxdiff = this.word!.length;
+      // get color from red to green depending on how close diff/maxdiff is from 0 or 1
+      const resultColor = calculateColor(diff / maxdiff);
     }
   }
 

@@ -4,11 +4,12 @@ import Game from '../classes/gameInstance';
 type gameControllerType = {
   getGame: (req: Request, res: Response, next: NextFunction) => void;
   getWord: (req: Request, res: Response, next: NextFunction) => Promise<void>;
-  getDefinition: (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => Promise<void>;
+  checkWord: (req: Request, res: Response, next: NextFunction) => void;
+  // getDefinition: (
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ) => Promise<void>;
 };
 
 const currentGames: { [key: string]: Game } = {};
@@ -39,16 +40,27 @@ const gameController: gameControllerType = {
     }
   },
 
-  /** retreive definition from m-w dictionary api */
-  async getDefinition(req: Request, res: Response, next: NextFunction) {
+  checkWord(req: Request, res: Response, next: NextFunction) {
+    const { submittedWord } = req.body;
     const game = res.locals.game as Game;
     try {
-      await game.checkDictionary();
+      game.checkWord(submittedWord);
       return next();
     } catch (err) {
       console.error(err);
     }
   },
+
+  // /** retreive definition from m-w dictionary api */
+  // async getDefinition(req: Request, res: Response, next: NextFunction) {
+  //   const game = res.locals.game as Game;
+  //   try {
+  //     await game.checkDictionary();
+  //     return next();
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // },
 };
 
 export default gameController;
