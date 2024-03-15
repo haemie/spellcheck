@@ -1,5 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import './App.css';
+import JSConfetti from 'js-confetti';
+const jsConfetti = new JSConfetti();
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,9 +21,10 @@ function App() {
         },
         body: JSON.stringify({ submittedWord: wordForm }),
       });
-      const result = await response.json();
-      if (divRef.current) {
-        document.body.style.backgroundColor = result;
+      const result: string | number = await response.json();
+      if (result !== 1) {
+        jsConfetti.addConfetti();
+        document.body.style.backgroundColor = result as string;
         setTimeout(() => {
           document.body.style.backgroundColor = 'inherit';
         }, 500);
@@ -41,7 +44,7 @@ function App() {
       console.log('setted word from server');
       // now read word?
       const msg = new SpeechSynthesisUtterance();
-      msg.text = targetWord;
+      msg.text = word;
       window.speechSynthesis.speak(msg);
     } catch (err) {
       console.error('failed to get word from server');
@@ -56,7 +59,13 @@ function App() {
 
   useEffect(() => {
     // console.log(wordForm);
-  });
+    if ('speechSynthesis' in window) {
+      // browser tts supported
+    } else {
+      // browser tts not supported
+      alert("Sorry, your browser doesn't support text to speech!");
+    }
+  }, []);
 
   return (
     <>
