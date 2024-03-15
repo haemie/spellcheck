@@ -9,6 +9,9 @@ function App() {
   const [userForm, setUserForm] = useState('');
   const [wordForm, setWordForm] = useState('');
   const [targetWord, setTargetWord] = useState('');
+  const [definition, setDefinition] = useState('');
+  const [streak, setStreak] = useState(0);
+
   const divRef: React.RefObject<HTMLDivElement> = useRef(null);
 
   async function submitWord(e: FormEvent) {
@@ -21,30 +24,47 @@ function App() {
         },
         body: JSON.stringify({ submittedWord: wordForm }),
       });
-      const result: string | number = await response.json();
-      if (result !== 1) {
+      const result = await response.json();
+      if (result.correct) {
+        setWordForm('');
+        setStreak(result.streak);
         jsConfetti.addConfetti();
-        document.body.style.backgroundColor = result as string;
-        setTimeout(() => {
-          document.body.style.backgroundColor = 'inherit';
-        }, 500);
+        // load new word
+        getWord();
+      } else {
+        // do nothing else
       }
+      document.body.style.backgroundColor = result.color;
+      setTimeout(() => {
+        document.body.style.backgroundColor = 'inherit';
+      }, 500);
+
       console.log('submitted');
     } catch (err) {
       console.error(err);
     }
   }
 
-  async function getWord(e: FormEvent) {
+  async function handleStart(e?: FormEvent) {
     e.preventDefault();
     try {
+      getWord();
+    } catch (err) {
+      console.error('failed to get word from server');
+    }
+  }
+
+  async function getWord() {
+    try {
       const response = await fetch('http://localhost:8000/game/getWord');
-      const word = await response.json();
-      setTargetWord(word);
+      const result = await response.json();
+      console.log(result);
+      setTargetWord(result.word);
+      setDefinition(result.definition);
       console.log('setted word from server');
       // now read word?
       const msg = new SpeechSynthesisUtterance();
-      msg.text = word;
+      msg.text = result.word;
       window.speechSynthesis.speak(msg);
     } catch (err) {
       console.error('failed to get word from server');
@@ -54,6 +74,12 @@ function App() {
   function playbackWord() {
     const msg = new SpeechSynthesisUtterance();
     msg.text = targetWord;
+    window.speechSynthesis.speak(msg);
+  }
+
+  function playbackDefinition() {
+    const msg = new SpeechSynthesisUtterance();
+    msg.text = definition;
     window.speechSynthesis.speak(msg);
   }
 
@@ -70,10 +96,10 @@ function App() {
   return (
     <>
       <h1>spellcheck</h1>
+      <h2>streak: {streak}</h2>
       <div ref={divRef}>
         {targetWord ? (
           <>
-            {' '}
             <form onSubmit={submitWord}>
               <input
                 type="text"
@@ -83,9 +109,14 @@ function App() {
               <input type="submit" value={'submit'} />
             </form>
             <input type="button" onClick={playbackWord} value="play word" />
+            <input
+              type="button"
+              onClick={playbackDefinition}
+              value="play definition"
+            />
           </>
         ) : (
-          <input type="button" onClick={getWord} value="new word" />
+          <input type="button" onClick={handleStart} value="new word" />
         )}
       </div>
     </>

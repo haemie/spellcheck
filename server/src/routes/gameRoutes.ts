@@ -15,7 +15,7 @@ router.get(
   gameController.getWord,
   (req, res) => {
     // console.log(res.locals);
-    return res.status(200).json(res.locals.game.word);
+    return res.status(200).json(res.locals.getResponse);
   }
 );
 
@@ -24,8 +24,8 @@ router.post(
   gameController.getGame,
   gameController.checkWord,
   (req, res) => {
-    console.log(res.locals.resultColor);
-    return res.status(200).json(res.locals.resultColor);
+    // console.log(res.locals.checkResponse);
+    return res.status(200).json(res.locals.checkResponse);
   }
 );
 

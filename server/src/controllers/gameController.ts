@@ -34,6 +34,7 @@ const gameController: gameControllerType = {
       // game is on res.locals.game
       await game.getWord();
       await game.checkDictionary();
+      res.locals.getResponse = { word: game.word, definition: game.definition };
       return next();
     } catch (err) {
       console.error(err);
@@ -44,7 +45,7 @@ const gameController: gameControllerType = {
     const { submittedWord } = req.body;
     const game = res.locals.game as Game;
     try {
-      res.locals.resultColor = game.checkWord(submittedWord);
+      res.locals.checkResponse = game.checkWord(submittedWord);
       return next();
     } catch (err) {
       console.error(err);
