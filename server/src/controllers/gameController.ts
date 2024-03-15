@@ -34,7 +34,11 @@ const gameController: gameControllerType = {
       // game is on res.locals.game
       await game.getWord();
       await game.checkDictionary();
-      res.locals.getResponse = { word: game.word, definition: game.definition };
+      res.locals.getResponse = {
+        word: game.word,
+        definition: game.definition,
+        audioURL: game.audioURL,
+      };
       return next();
     } catch (err) {
       console.error(err);

@@ -49,6 +49,7 @@ export default class Game {
       const dictionary = await data.json();
       if (!dictionary[0].meta) {
         console.log('no entry found in dictionary');
+        this.audioURL = undefined;
       } else {
         const dictionaryEntry = dictionary[0];
         // getting shortdef

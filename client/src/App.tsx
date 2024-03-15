@@ -11,6 +11,7 @@ function App() {
   const [targetWord, setTargetWord] = useState('');
   const [definition, setDefinition] = useState('');
   const [streak, setStreak] = useState(0);
+  const [audioFile, setAudioFile] = useState('');
 
   const divRef: React.RefObject<HTMLDivElement> = useRef(null);
 
@@ -25,7 +26,7 @@ function App() {
         body: JSON.stringify({ submittedWord: wordForm }),
       });
       const result = await response.json();
-      if (result.correct) {
+      if (!result.score) {
         setWordForm('');
         setStreak(result.streak);
         jsConfetti.addConfetti();
@@ -45,7 +46,7 @@ function App() {
     }
   }
 
-  async function handleStart(e?: FormEvent) {
+  async function handleStart(e: FormEvent) {
     e.preventDefault();
     try {
       getWord();
@@ -61,20 +62,32 @@ function App() {
       console.log(result);
       setTargetWord(result.word);
       setDefinition(result.definition);
+      setAudioFile(result.audioURL);
       console.log('setted word from server');
       // now read word?
-      const msg = new SpeechSynthesisUtterance();
-      msg.text = result.word;
-      window.speechSynthesis.speak(msg);
+      // check if official audio available
+      if (result.audioURL) {
+        const audio = new Audio(result.audioURL);
+        audio.play();
+      } else {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = result.word;
+        window.speechSynthesis.speak(msg);
+      }
     } catch (err) {
       console.error('failed to get word from server');
     }
   }
 
   function playbackWord() {
-    const msg = new SpeechSynthesisUtterance();
-    msg.text = targetWord;
-    window.speechSynthesis.speak(msg);
+    if (audioFile) {
+      const audio = new Audio(audioFile);
+      audio.play();
+    } else {
+      const msg = new SpeechSynthesisUtterance();
+      msg.text = targetWord;
+      window.speechSynthesis.speak(msg);
+    }
   }
 
   function playbackDefinition() {
