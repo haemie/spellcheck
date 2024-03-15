@@ -67,3 +67,8 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.previousGuesses {
+  overflow-y: auto;
+  height: 15em;
+}

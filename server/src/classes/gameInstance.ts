@@ -84,21 +84,20 @@ export default class Game {
   /**check submitted word argument against actual word */
   public checkWord(submittedWord: string) {
     // get a score for how close the submittedword is to this.word
-    let correct = false;
+    let score = Infinity;
     let color = 'rgba(255, 0, 100, 0.5)';
     if (submittedWord === this.word) {
       this.streak += 1;
-      correct = true;
+      score = 0;
       color = 'rgba(0, 255, 100, 0.5)';
     } else {
       // score the input based on levenshtein distance
-      const diff = calculateDiff(submittedWord, this.word!);
+      score = calculateDiff(submittedWord, this.word!);
       const maxdiff = this.word!.length;
       // get color from red to green depending on how close diff/maxdiff is from 0 or 1
-      correct = false;
-      color = calculateColor(diff / maxdiff);
+      color = calculateColor(score / maxdiff);
     }
-    return { correct, color, streak: this.streak };
+    return { score, color, streak: this.streak };
   }
 
   // public wordPlayback() {}

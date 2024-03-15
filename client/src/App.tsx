@@ -12,10 +12,13 @@ function App() {
   const [definition, setDefinition] = useState('');
   const [streak, setStreak] = useState(0);
   const [audioFile, setAudioFile] = useState('');
+  const [previousGuesses, setPreviousGuesses] = useState<
+    Array<{ [key: string]: number }>
+  >([]);
 
   const divRef: React.RefObject<HTMLDivElement> = useRef(null);
 
-  async function submitWord(e: FormEvent) {
+  async function submitWord(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       const response = await fetch('http://localhost:8000/game/checkWord', {
@@ -26,7 +29,9 @@ function App() {
         body: JSON.stringify({ submittedWord: wordForm }),
       });
       const result = await response.json();
+      console.log(result);
       if (!result.score) {
+        setPreviousGuesses([]);
         setWordForm('');
         setStreak(result.streak);
         jsConfetti.addConfetti();
@@ -34,6 +39,13 @@ function App() {
         getWord();
       } else {
         // do nothing else
+        const wordinput = e.target as HTMLFormElement;
+        (
+          wordinput.elements.namedItem('wordInput') as HTMLInputElement
+        ).select();
+        const guessObj: { [key: string]: number } = {};
+        guessObj[wordForm] = result.score as number;
+        setPreviousGuesses([guessObj].concat(...previousGuesses));
       }
       document.body.style.backgroundColor = result.color;
       setTimeout(() => {
@@ -117,6 +129,7 @@ function App() {
               <input
                 type="text"
                 value={wordForm}
+                name="wordInput"
                 onChange={(e) => setWordForm(e.target.value)}
               />
               <input type="submit" value={'submit'} />
@@ -131,6 +144,16 @@ function App() {
         ) : (
           <input type="button" onClick={handleStart} value="new word" />
         )}
+      </div>
+      <div className="previousGuesses">
+        {previousGuesses.map((e) => {
+          const [key, value] = Object.entries(e)[0];
+          return (
+            <div>
+              {key} - {value}
+            </div>
+          );
+        })}
       </div>
     </>
   );
