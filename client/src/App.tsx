@@ -128,15 +128,22 @@ function App() {
             <form onSubmit={submitWord}>
               <input
                 type="text"
+                accessKey="i"
                 value={wordForm}
                 name="wordInput"
                 onChange={(e) => setWordForm(e.target.value)}
               />
               <input type="submit" value={'submit'} />
             </form>
-            <input type="button" onClick={playbackWord} value="play word" />
             <input
               type="button"
+              accessKey="a"
+              onClick={playbackWord}
+              value="play word"
+            />
+            <input
+              type="button"
+              accessKey="s"
               onClick={playbackDefinition}
               value="play definition"
             />
