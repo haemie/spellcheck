@@ -126,13 +126,20 @@ function App() {
         {targetWord ? (
           <>
             <form id="wordForm" onSubmit={submitWord}>
-              <div id="wordFormWrapper" className="flex flex-row">
+              <div id="wordFormWrapper" className="flex flex-row mb-4">
                 <div id="wordInputWrapper">
                   <input
                     type="text"
                     id="wordInput"
                     accessKey="i"
-                    style={{ width: `${1.2 * targetWord.length}ch` }}
+                    style={{
+                      width: `${1.2 * targetWord.length}ch`,
+                      backgroundColor: 'transparent',
+                      background: `repeating-linear-gradient(90deg,
+                        white 0, white 1ch,
+                        transparent 0, transparent 1.2ch)
+                        0 100%/ ${1.2 * targetWord.length}ch 2px no-repeat`,
+                    }}
                     maxLength={targetWord.length}
                     value={wordForm}
                     name="wordInput"
@@ -142,7 +149,7 @@ function App() {
                 </div>
                 <input type="submit" id="submitButton" value={'check'} />
               </div>
-              <div id="playbackWrapper">
+              <div id="playbackWrapper" className="flex flex-row gap-1">
                 <input
                   type="button"
                   accessKey="a"
@@ -174,7 +181,7 @@ function App() {
           );
         })}
       </div>
-      <input type="button" value="quit" />
+      <input type="button" id="quitBtn" value="quit" />
     </>
   );
 }
