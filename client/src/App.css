@@ -9,3 +9,52 @@
 .card {
   padding: 2em;
 }
+
+
+
+#wordInput, #underlines {
+  border-radius: 0.1em;
+  font-size: 3em;
+  font-family: monospace;
+  /* text-align: center; */
+  transition: all 0.5s;
+  padding: 0.2em 0.5em 0.25em 0.5em;
+  letter-spacing: 0.2ch;
+  border-style: inset;
+  border-width: 0;
+  overflow: hidden;
+}
+
+#wordInput {
+  /* outline: rgb(119, 119, 119);
+  outline-style: solid; */
+
+}
+
+#wordForm {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+#wordInputWrapper{
+  position: relative;
+}
+
+#submitButton, #playWordBtn, #playDefBtn {
+  font-size: 2em;
+  text-align: center;
+}
+
+#underlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none
+}
+
+#previousGuesses {
+  overflow-y: auto;
+  height: 9em;
+}
+

@@ -75,7 +75,7 @@ function App() {
       setTargetWord(result.word);
       setDefinition(result.definition);
       setAudioFile(result.audioURL);
-      console.log('setted word from server');
+      console.log(`got word`, result.word);
       // now read word?
       // check if official audio available
       if (result.audioURL) {
@@ -120,48 +120,61 @@ function App() {
 
   return (
     <>
-      <h1>spellcheck</h1>
+      <h1 className="font-mono">spellcheck</h1>
       <h2>streak: {streak}</h2>
       <div ref={divRef}>
         {targetWord ? (
           <>
-            <form onSubmit={submitWord}>
-              <input
-                type="text"
-                accessKey="i"
-                value={wordForm}
-                name="wordInput"
-                onChange={(e) => setWordForm(e.target.value)}
-              />
-              <input type="submit" value={'submit'} />
+            <form id="wordForm" onSubmit={submitWord}>
+              <div id="wordFormWrapper" className="flex flex-row">
+                <div id="wordInputWrapper">
+                  <input
+                    type="text"
+                    id="wordInput"
+                    accessKey="i"
+                    style={{ width: `${1.2 * targetWord.length}ch` }}
+                    maxLength={targetWord.length}
+                    value={wordForm}
+                    name="wordInput"
+                    onChange={(e) => setWordForm(e.target.value)}
+                  />
+                  <div id="underlines">{'_'.repeat(targetWord.length)}</div>
+                </div>
+                <input type="submit" id="submitButton" value={'check'} />
+              </div>
+              <div id="playbackWrapper">
+                <input
+                  type="button"
+                  accessKey="a"
+                  id="playWordBtn"
+                  onClick={playbackWord}
+                  value="play word"
+                />
+                <input
+                  type="button"
+                  accessKey="s"
+                  id="playDefBtn"
+                  onClick={playbackDefinition}
+                  value="play definition"
+                />
+              </div>
             </form>
-            <input
-              type="button"
-              accessKey="a"
-              onClick={playbackWord}
-              value="play word"
-            />
-            <input
-              type="button"
-              accessKey="s"
-              onClick={playbackDefinition}
-              value="play definition"
-            />
           </>
         ) : (
           <input type="button" onClick={handleStart} value="new word" />
         )}
       </div>
-      <div className="previousGuesses">
-        {previousGuesses.map((e) => {
+      <div id="previousGuesses">
+        {previousGuesses.map((e, i) => {
           const [key, value] = Object.entries(e)[0];
           return (
-            <div>
-              {key} - {value}
+            <div key={`guess${i}`}>
+              {key} : {value}
             </div>
           );
         })}
       </div>
+      <input type="button" value="quit" />
     </>
   );
 }
