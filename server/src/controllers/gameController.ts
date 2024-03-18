@@ -32,7 +32,7 @@ const gameController: gameControllerType = {
     const game = res.locals.game as Game;
     try {
       // game is on res.locals.game
-      await game.getWord();
+      await game.fetchRandomWord();
       await game.checkDictionary();
       res.locals.getResponse = {
         word: game.word,
