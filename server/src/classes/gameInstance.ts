@@ -13,14 +13,22 @@ export default class Game {
   public audioURL: string | undefined;
   public sentence: string | undefined;
 
-  constructor(userid: string) {
+  constructor(
+    userid: string,
+    streak?: number,
+    score?: number,
+    word?: string,
+    definition?: string,
+    audioURL?: string,
+    sentence?: string
+  ) {
     this.userid = userid;
-    this.streak = 0;
-    this.score = 0;
-    this.word = undefined;
-    this.definition = undefined;
-    this.audioURL = undefined;
-    this.sentence = undefined;
+    this.streak = streak || 0;
+    this.score = score || 0;
+    this.word = word;
+    this.definition = definition;
+    this.audioURL = audioURL;
+    this.sentence = sentence;
   }
 
   /**

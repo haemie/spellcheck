@@ -7,6 +7,13 @@ export const pool = new Pool({
   connectionString: SQL_URI,
 });
 
+// const pool = new Pool({
+//   user: DB_USER,
+//   password: DB_PASS,
+//   host: DB_HOST,
+//   port: DB_PORT,
+//   database: DB_NAME})
+
 export function dbQuery(
   text: string,
   params: Array<any>

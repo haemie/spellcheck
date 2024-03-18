@@ -3,6 +3,9 @@ import gameRoutes from './routes/gameRoutes';
 import path from 'path';
 import session from 'express-session';
 import cors from 'cors';
+import { pool } from './models/sqlConnection';
+import pgSessionStore from 'connect-pg-simple';
+const pgSession = pgSessionStore(session);
 
 export default class App {
   private app: express.Application;
@@ -20,6 +23,10 @@ export default class App {
     // looks at cookie from client and matches with sessionid, accessable at req.sessionID
     this.app.use(
       session({
+        store: new pgSession({
+          pool: pool,
+          tableName: 'session',
+        }),
         secret: 'secret',
         resave: false,
         saveUninitialized: true,

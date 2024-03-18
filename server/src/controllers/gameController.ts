@@ -18,16 +18,36 @@ const currentGames: { [key: string]: Game } = {};
 const gameController: gameControllerType = {
   /** start the game, or retreive previous progress if it exists, save it onto res.locals.game */
   async getGame(req: Request, res: Response, next: NextFunction) {
-    // check cache/database of games
+    // destructire sessionID from req
     const { sessionID } = req;
+    // check cache of games
     // if game not found in cache, check database
     if (!currentGames[sessionID]) {
       const gameFromDB = await db.getGameState(sessionID);
-      console.log(gameFromDB);
-      currentGames[sessionID] = new Game(sessionID);
+      // if game not found in database, create a new gamestate
+      if (gameFromDB?.rows.length === 0) {
+        // initialize gamestate
+        db.initializeGameState(sessionID);
+        // add new game to cache
+        currentGames[sessionID] = new Game(sessionID);
+      } else {
+        // game found in database, create game with retrieved values
+        const { userid, streak, score, word, definition, audiourl, sentence } =
+          gameFromDB?.rows[0];
+        currentGames[sessionID] = new Game(
+          userid,
+          streak,
+          score,
+          word,
+          definition,
+          audiourl,
+          sentence
+        );
+        console.log(gameFromDB?.rows);
+      }
     }
+    // game for session onto res.locals
     res.locals.game = currentGames[sessionID];
-    // game for session is on res.locals
     return next();
   },
 
