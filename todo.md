@@ -10,6 +10,7 @@ sync game state to sessions
 look into pronounciation helpers:
 https://www.npmjs.com/package/compromise
 https://observablehq.com/@spencermountain/compromise-pronounce
+words like khor
 
 look into other dictionary apis:
 https://developer.wordnik.com/
