@@ -11,7 +11,13 @@ export default class App {
   constructor(port: number) {
     this.port = port;
     this.app = express();
-    this.app.use(cors());
+    this.app.use(
+      cors({
+        origin: 'http://localhost:5173',
+        credentials: true,
+      })
+    );
+    // looks at cookie from client and matches with sessionid, accessable at req.sessionID
     this.app.use(
       session({
         secret: 'secret',

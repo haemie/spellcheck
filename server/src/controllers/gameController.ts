@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Game from '../classes/gameInstance';
+import db from '../models/sqlQueries';
 
 type gameControllerType = {
   getGame: (req: Request, res: Response, next: NextFunction) => void;
@@ -16,19 +17,23 @@ const currentGames: { [key: string]: Game } = {};
 
 const gameController: gameControllerType = {
   /** start the game, or retreive previous progress if it exists, save it onto res.locals.game */
-  getGame(req: Request, res: Response, next: NextFunction) {
+  async getGame(req: Request, res: Response, next: NextFunction) {
     // check cache/database of games
-    const { userid } = req.body;
-    if (!currentGames[userid]) {
-      currentGames[userid] = new Game(userid);
+    const { sessionID } = req;
+    // if game not found in cache, check database
+    if (!currentGames[sessionID]) {
+      const gameFromDB = await db.getGameState(sessionID);
+      console.log(gameFromDB);
+      currentGames[sessionID] = new Game(sessionID);
     }
-    res.locals.game = currentGames[userid];
+    res.locals.game = currentGames[sessionID];
     // game for session is on res.locals
     return next();
   },
 
   /** retreive word and definitions */
   async getWord(req: Request, res: Response, next: NextFunction) {
+    console.log(req.sessionID);
     const game = res.locals.game as Game;
     try {
       // game is on res.locals.game

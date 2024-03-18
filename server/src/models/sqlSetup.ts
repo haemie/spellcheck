@@ -11,5 +11,6 @@ const query = `CREATE TABLE IF NOT EXISTS games (
 )`;
 
 export async function initializeDB() {
+  console.log('initializing db');
   await pool.query(query);
 }
