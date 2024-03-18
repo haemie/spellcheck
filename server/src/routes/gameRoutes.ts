@@ -29,6 +29,16 @@ router.post(
   }
 );
 
+router.post(
+  '/quit',
+  gameController.getGame,
+  gameController.quitGame,
+  (req, res) => {
+    // console.log(res.locals.checkResponse);
+    return res.status(200).json(res.locals.checkResponse);
+  }
+);
+
 // router.get(
 //   '/getDefinition',
 //   gameController.getGame,

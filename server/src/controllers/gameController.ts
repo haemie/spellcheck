@@ -6,6 +6,8 @@ type gameControllerType = {
   getGame: (req: Request, res: Response, next: NextFunction) => void;
   getWord: (req: Request, res: Response, next: NextFunction) => Promise<void>;
   checkWord: (req: Request, res: Response, next: NextFunction) => void;
+  quitGame: (req: Request, res: Response, next: NextFunction) => void;
+
   // getDefinition: (
   //   req: Request,
   //   res: Response,
@@ -79,6 +81,12 @@ const gameController: gameControllerType = {
     } catch (err) {
       console.error(err);
     }
+  },
+
+  async quitGame(req: Request, res: Response, next: NextFunction) {
+    const game = res.locals.game as Game;
+    game.resetGame();
+    return next();
   },
 
   // /** retreive definition from m-w dictionary api */

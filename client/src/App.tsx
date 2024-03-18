@@ -10,6 +10,7 @@ function App() {
   const [wordForm, setWordForm] = useState('');
   const [targetWord, setTargetWord] = useState('');
   const [definition, setDefinition] = useState('');
+  const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [audioFile, setAudioFile] = useState('');
   const [previousGuesses, setPreviousGuesses] = useState<
@@ -26,26 +27,31 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ submittedWord: wordForm }),
       });
       const result = await response.json();
       console.log(result);
-      if (!result.score) {
+      if (result.diff === 0) {
         setPreviousGuesses([]);
         setWordForm('');
+        setScore(result.score);
         setStreak(result.streak);
         jsConfetti.addConfetti();
         // load new word
         getWord();
       } else {
-        // do nothing else
+        // select the text inside input
         const wordinput = e.target as HTMLFormElement;
         (
           wordinput.elements.namedItem('wordInput') as HTMLInputElement
         ).select();
+        // add guess and how far off the guess was
         const guessObj: { [key: string]: number } = {};
-        guessObj[wordForm] = result.score as number;
+        guessObj[wordForm] = result.diff as number;
         setPreviousGuesses([guessObj].concat(...previousGuesses));
+        // reset streak to 0
+        setStreak(result.streak);
       }
       document.body.style.backgroundColor = result.color;
       setTimeout(() => {
@@ -69,7 +75,10 @@ function App() {
 
   async function getWord() {
     try {
-      const response = await fetch('http://localhost:8000/game/getWord');
+      const response = await fetch('http://localhost:8000/game/getWord', {
+        method: 'GET',
+        credentials: 'include',
+      });
       const result = await response.json();
       console.log(result);
       setTargetWord(result.word);
@@ -88,6 +97,31 @@ function App() {
       }
     } catch (err) {
       console.error('failed to get word from server');
+    }
+  }
+
+  async function handleQuit(e: FormEvent) {
+    e.preventDefault();
+    try {
+      await fetch('http://localhost:8000/game/quit', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+      // const result = await response.json();
+      // console.log(result);
+
+      setPreviousGuesses([]);
+      setWordForm('');
+      setStreak(0);
+      setScore(0);
+      setTargetWord('');
+
+      console.log('quitted');
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -121,7 +155,9 @@ function App() {
   return (
     <>
       <h1 className="font-mono">spellcheck</h1>
-      <h2>streak: {streak}</h2>
+      <h2>
+        score: {score} | streak: {streak}
+      </h2>
       <div ref={divRef}>
         {targetWord ? (
           <>
@@ -181,7 +217,7 @@ function App() {
           );
         })}
       </div>
-      <input type="button" id="quitBtn" value="quit" />
+      <input type="button" id="quitBtn" value="quit" onClick={handleQuit} />
     </>
   );
 }
