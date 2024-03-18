@@ -14,6 +14,9 @@ https://observablehq.com/@spencermountain/compromise-pronounce
 look into other dictionary apis:
 https://developer.wordnik.com/
 
+check word from dictionary matches query:
+lustration => lustrate
+
 use own database?
 
 remove answer word from client state entirely?
