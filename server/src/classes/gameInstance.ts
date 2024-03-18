@@ -51,6 +51,10 @@ export default class Game {
     this.definition = definition;
   }
 
+  private setAudioURL(audioURL: string | undefined) {
+    this.audioURL = audioURL;
+  }
+
   public async checkDictionary() {
     try {
       console.log('checking dictionaryapi');
@@ -59,8 +63,9 @@ export default class Game {
           this.word,
           this.definition
         );
+        this.setDefinition(definition);
+        this.setAudioURL(audioURL);
       }
-
       return this;
     } catch (err) {
       console.error(err);
