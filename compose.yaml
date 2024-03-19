@@ -1,0 +1,23 @@
+version: '3'
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - 4173:4173
+    depends_on:
+      - server
+  server:
+    build:
+      context: ./server
+    environment:
+      NODE_ENV: production
+      DICTIONARY_API_KEY: ${DICTIONARY_API_KEY}
+      PORT: ${PORT}
+      SQL_URI: ${SQL_URI}
+      MONGODB_URI: ${MONGODB_URI}
+
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
