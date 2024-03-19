@@ -116,7 +116,6 @@ function App() {
       setPreviousGuesses([]);
       setWordForm('');
       setStreak(0);
-      setScore(0);
       setTargetWord('');
 
       console.log('quitted');
@@ -204,7 +203,12 @@ function App() {
             </form>
           </>
         ) : (
-          <input type="button" onClick={handleStart} value="new word" />
+          <input
+            type="button"
+            id="startBtn"
+            onClick={handleStart}
+            value="start"
+          />
         )}
       </div>
       <div id="previousGuesses">

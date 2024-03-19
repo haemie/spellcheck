@@ -48,7 +48,7 @@
   position: relative;
 }
 
-#submitButton, #playWordBtn, #playDefBtn, #quitBtn {
+#submitButton, #playWordBtn, #playDefBtn, #quitBtn, #startBtn {
   font-size: 2em;
   text-align: center;
 }
