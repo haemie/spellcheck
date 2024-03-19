@@ -1,23 +1,25 @@
-TODO:
-make case insensitive
+<h1>TODO:</h1>
 
-handle words with accents like garçonniere
+- make case insensitive
 
-add quit route
+- handle words with accents like garçonniere
 
-sync game state to sessions
+- add quit route
 
-look into pronounciation helpers:
-https://www.npmjs.com/package/compromise
-https://observablehq.com/@spencermountain/compromise-pronounce
-words like khor
+- sync game state to sessions
 
-look into other dictionary apis:
-https://developer.wordnik.com/
+- look into pronounciation helpers:
+  https://www.npmjs.com/package/compromise
+  https://observablehq.com/@spencermountain/compromise-pronounce
+  words like khor
 
-check word from dictionary matches query:
-lustration => lustrate
+- look into other dictionary apis:
+  https://developer.wordnik.com/
 
-use own database?
+- check word from dictionary matches query:
+  lustration => lustrate,
+  russel => Crouse?
 
-remove answer word from client state entirely?
+- use own database?
+
+- remove answer word from client state entirely?
