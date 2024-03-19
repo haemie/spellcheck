@@ -4,9 +4,8 @@ import JSConfetti from 'js-confetti';
 const jsConfetti = new JSConfetti();
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [userID, setUserID] = useState(null);
-  const [userForm, setUserForm] = useState('');
+  // const [userID, setUserID] = useState(null);
+  // const [userForm, setUserForm] = useState('');
   const [wordForm, setWordForm] = useState('');
   const [targetWord, setTargetWord] = useState('');
   const [definition, setDefinition] = useState('');
