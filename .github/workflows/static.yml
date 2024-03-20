@@ -27,6 +27,9 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,10 +38,6 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      - name: Navigate to client directory
-        run: cd client
-      - name: Check directory
-        run: ls
       - name: Install dependencies
         run: npm ci
       - name: Build
