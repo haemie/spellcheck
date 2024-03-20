@@ -15,7 +15,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --charline-color: white;
 }
+
 
 a {
   font-weight: 500;
@@ -45,6 +48,7 @@ h1 {
   :root {
     color: #213547;
     background-color: #ffffff;
+    --charline-color: black;
   }
   a:hover {
     color: #747bff;

@@ -170,9 +170,9 @@ function App() {
                       width: `${1.2 * targetWord.length}ch`,
                       backgroundColor: 'transparent',
                       background: `repeating-linear-gradient(90deg,
-                        white 0, white 1ch,
+                        var(--charline-color) 0, var(--charline-color) 1ch,
                         transparent 0, transparent 1.2ch)
-                        0 100%/ ${1.2 * targetWord.length}ch 2px no-repeat`,
+                        0 100%/ ${1.2 * targetWord.length}ch 3px no-repeat`,
                     }}
                     maxLength={targetWord.length}
                     value={wordForm}
