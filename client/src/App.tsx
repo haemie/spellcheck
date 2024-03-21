@@ -3,6 +3,10 @@ import './App.css';
 import JSConfetti from 'js-confetti';
 const jsConfetti = new JSConfetti();
 
+const API_ENDPOINT = import.meta.env.PROD
+  ? import.meta.env.VITE_API_ENDPOINT
+  : 'http://localhost:8000';
+
 function App() {
   // const [userID, setUserID] = useState(null);
   // const [userForm, setUserForm] = useState('');
@@ -21,7 +25,7 @@ function App() {
   async function submitWord(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/game/checkWord', {
+      const response = await fetch(`${API_ENDPOINT}/game/checkWord`, {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +78,7 @@ function App() {
 
   async function getWord() {
     try {
-      const response = await fetch('http://localhost:8000/game/getWord', {
+      const response = await fetch(`${API_ENDPOINT}/game/getWord`, {
         method: 'GET',
         credentials: 'include',
       });
@@ -102,7 +106,7 @@ function App() {
   async function handleQuit(e: FormEvent) {
     e.preventDefault();
     try {
-      await fetch('http://localhost:8000/game/quit', {
+      await fetch(`${API_ENDPOINT}/game/quit`, {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
