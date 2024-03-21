@@ -5,6 +5,8 @@ import session from 'express-session';
 import cors from 'cors';
 import { pool } from './models/sqlConnection';
 import pgSessionStore from 'connect-pg-simple';
+import dotenv from 'dotenv';
+dotenv.config();
 const pgSession = pgSessionStore(session);
 
 export default class App {
@@ -16,7 +18,11 @@ export default class App {
     this.app = express();
     this.app.use(
       cors({
-        origin: ['http://localhost:5173', 'http://localhost:4173'],
+        origin: [
+          'http://localhost:5173',
+          'http://localhost:4173',
+          'https://haemie.github.io',
+        ],
         credentials: true,
       })
     );
@@ -27,7 +33,7 @@ export default class App {
           pool: pool,
           tableName: 'session',
         }),
-        secret: 'secret',
+        secret: (process.env.SECRET as string).split(','),
         resave: false,
         saveUninitialized: true,
         // cookie: { secure: true },

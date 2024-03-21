@@ -17,6 +17,7 @@ services:
       PORT: ${PORT}
       SQL_URI: ${SQL_URI}
       MONGODB_URI: ${MONGODB_URI}
+      SECRET: ${SECRET}
 
     ports:
       - ${PORT}:${PORT}
