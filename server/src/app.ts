@@ -36,7 +36,7 @@ export default class App {
         secret: (process.env.SECRET as string).split(','),
         resave: false,
         saveUninitialized: true,
-        // cookie: { secure: true },
+        cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 },
       })
     );
 
