@@ -4,10 +4,6 @@
 
 - handle words with accents like garçonniere
 
-- add quit route
-
-- sync game state to sessions
-
 - look into pronounciation helpers:
   https://www.npmjs.com/package/compromise
   https://observablehq.com/@spencermountain/compromise-pronounce
