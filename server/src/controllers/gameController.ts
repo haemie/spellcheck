@@ -21,7 +21,7 @@ const gameController: gameControllerType = {
   /** start the game, or retreive previous progress if it exists, save it onto res.locals.game */
   async getGame(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log('getting game in getgame controller');
+      // console.log('getting game in getgame controller');
       // destructire sessionID from req
       const { sessionID } = req;
       // check cache of games
@@ -36,7 +36,7 @@ const gameController: gameControllerType = {
           db.initializeGameState(sessionID);
           // add new game to cache
           currentGames[sessionID] = new Game(sessionID);
-          console.log(currentGames);
+          // console.log(currentGames);
         } else {
           console.log('game found in database, retreiving and creating class');
           // game found in database, create game with retrieved values
@@ -58,7 +58,7 @@ const gameController: gameControllerType = {
             audiourl,
             sentence
           );
-          console.log(gameFromDB?.rows);
+          // console.log(gameFromDB?.rows);
         }
       }
       // game for session onto res.locals
@@ -73,8 +73,8 @@ const gameController: gameControllerType = {
 
   /** retreive word and definitions */
   async getWord(req: Request, res: Response, next: NextFunction) {
-    console.log('getting word in getword controller');
-    console.log(req.sessionID);
+    // console.log('getting word in getword controller');
+    console.log('sessionID:', req.sessionID);
     const game = res.locals.game as Game;
     try {
       // game is on res.locals.game
@@ -96,6 +96,7 @@ const gameController: gameControllerType = {
   checkWord(req: Request, res: Response, next: NextFunction) {
     const { submittedWord } = req.body;
     const game = res.locals.game as Game;
+    console.log(game);
     try {
       res.locals.checkResponse = game.checkWord(submittedWord);
       return next();

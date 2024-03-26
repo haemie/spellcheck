@@ -37,7 +37,7 @@ export default class Game {
    */
   public async fetchRandomWord() {
     try {
-      console.log('getting and setting word to class');
+      // console.log('getting and setting word to class');
       const { word, definition } = await randomwordService();
       if (word && definition) {
         this.setWord(word);
@@ -46,7 +46,7 @@ export default class Game {
         return this;
       }
     } catch (err) {
-      console.log('failed in getting random word for class');
+      console.log('error in method fetchRandomWord');
       this.setWord(null);
       this.setDefinition(null);
       console.error(err);
@@ -68,7 +68,7 @@ export default class Game {
 
   public async checkDictionary() {
     try {
-      console.log('checking dictionaryapi');
+      // console.log('checking dictionaryapi');
       if (this.word && this.definition) {
         const { definition, audioURL } = await checkMerriamWebster(
           this.word,
@@ -79,7 +79,7 @@ export default class Game {
       }
       return this;
     } catch (err) {
-      console.log('error in gameinstance checkDictionary');
+      console.log('error in checkDictionary method');
       console.error(err);
     }
   }
@@ -89,7 +89,7 @@ export default class Game {
     // get a diff score for how close the submittedword is to this.word
     let diff = Infinity;
     let color = 'rgba(255, 0, 100, 0.5)';
-    console.log(submittedWord, this.word);
+    // console.log(submittedWord, this.word);
     if (submittedWord === this.word) {
       this.streak += 1;
       this.score += 1;

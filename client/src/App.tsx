@@ -34,7 +34,7 @@ function App() {
         body: JSON.stringify({ submittedWord: wordForm }),
       });
       const result = await response.json();
-      console.log(result);
+      // console.log(result);
       if (result.diff === 0) {
         setPreviousGuesses([]);
         setWordForm('');
@@ -61,7 +61,7 @@ function App() {
         document.body.style.backgroundColor = 'inherit';
       }, 500);
 
-      console.log('submitted');
+      // console.log('submitted');
     } catch (err) {
       console.error(err);
     }
@@ -83,7 +83,7 @@ function App() {
         credentials: 'include',
       });
       const result = await response.json();
-      console.log(result);
+      // console.log(result);
       setTargetWord(result.word);
       setDefinition(result.definition);
       setAudioFile(result.audioURL);
@@ -121,8 +121,9 @@ function App() {
       setStreak(0);
       setTargetWord('');
 
-      console.log('quitted');
+      // console.log('quitted');
     } catch (err) {
+      console.log('error caught in handlequit');
       console.error(err);
     }
   }

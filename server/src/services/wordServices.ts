@@ -37,7 +37,7 @@ export async function checkMerriamWebster(
   audioURL?: string
 ) {
   try {
-    console.log('checking dictionaryapi');
+    // console.log('checking dictionaryapi');
     const data = await fetch(
       `https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${dictApiKey}`
     );
@@ -67,8 +67,8 @@ export async function checkMerriamWebster(
         // set audioURL
         audioURL = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdirectory}/${audiofile}.mp3`;
       }
-      console.log(definition);
-      console.log(audioURL);
+      // console.log(definition);
+      // console.log(audioURL);
     }
     return { definition, audioURL };
   } catch (err) {

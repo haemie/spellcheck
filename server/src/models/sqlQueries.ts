@@ -16,7 +16,6 @@ const db = {
       const querytext = `INSERT INTO games (userid, score, streak)
       VALUES ($1, $2, $3);`;
       const results = await dbQuery(querytext, [sessionid, 0, 0]);
-      // console.log('asdfasdf');
       // console.log(results.rows);
       return results;
     } catch (err) {
