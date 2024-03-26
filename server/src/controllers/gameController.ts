@@ -74,7 +74,8 @@ const gameController: gameControllerType = {
   /** retreive word and definitions */
   async getWord(req: Request, res: Response, next: NextFunction) {
     // console.log('getting word in getword controller');
-    console.log('sessionID:', req.sessionID);
+    const { sessionID } = req;
+    console.log('sessionID:', sessionID);
     const game = res.locals.game as Game;
     try {
       // game is on res.locals.game
@@ -85,6 +86,9 @@ const gameController: gameControllerType = {
         definition: game.definition,
         audioURL: game.audioURL,
       };
+      if (game.word && game.definition) {
+        db.setGameState(game.userid, game.word, game.definition, game.audioURL);
+      }
       return next();
     } catch (err) {
       console.log('error caught in getWord controller');
