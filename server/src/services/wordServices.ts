@@ -18,6 +18,7 @@ export async function randomwordService() {
     )?.textContent;
     return { word, definition };
   } catch (err) {
+    console.log('error in randomword service');
     console.error(err);
     return { word: null, definition: null };
   }
@@ -71,6 +72,7 @@ export async function checkMerriamWebster(
     }
     return { definition, audioURL };
   } catch (err) {
+    console.log('error in checkmerriamwebster service');
     console.error(err);
     return { definition, audioURL };
   }
