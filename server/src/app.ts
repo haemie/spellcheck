@@ -35,10 +35,25 @@ export default class App {
         }),
         secret: (process.env.SECRET as string).split(','),
         resave: false,
-        saveUninitialized: true,
-        cookie: { maxAge: 1000 * 60 * 60 * 24 },
+        saveUninitialized: false,
+        cookie:
+          process.env.NODE_ENV === 'production'
+            ? {
+                secure: true,
+                httpOnly: false,
+                sameSite: 'none',
+                maxAge: 1000 * 60 * 60,
+              }
+            : {
+                // secure: true,
+                httpOnly: false,
+                // sameSite: 'none',
+                maxAge: 1000 * 60 * 60,
+              },
       })
     );
+
+    this.app.set('trust proxy', 1);
 
     this.app.use(express.json());
     this.app.use(express.static('../public'));
@@ -55,7 +70,9 @@ export default class App {
 
   public startServer() {
     this.app.listen(this.port, () =>
-      console.log(`server listening at port ${this.port}`)
+      console.log(
+        `server in ${process.env.NODE_ENV} mode listening at port ${this.port}`
+      )
     );
   }
 }
