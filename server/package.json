@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "set NODE_ENV=development&& nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/index.ts\"",
+    "dev": "set NODE_ENV=development&& nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node -T src/index.ts\"",
     "start": "set NODE_ENV=production&& node dist/index.js",
     "build": "tsc"
   },

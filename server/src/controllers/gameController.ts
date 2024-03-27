@@ -88,6 +88,7 @@ const gameController: gameControllerType = {
       };
       if (game.word && game.definition) {
         db.setGameState(game.userid, game.word, game.definition, game.audioURL);
+        req.session.word = 'test';
       }
       return next();
     } catch (err) {
@@ -101,6 +102,7 @@ const gameController: gameControllerType = {
     const { submittedWord } = req.body;
     const game = res.locals.game as Game;
     console.log(game);
+    console.log(req.session);
     try {
       res.locals.checkResponse = game.checkWord(submittedWord);
       return next();
