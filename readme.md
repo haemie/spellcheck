@@ -48,7 +48,7 @@ To get a local copy up and running follow these example steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/haemie/supertictactoe.git
+   git clone https://github.com/haemie/spellcheck.git
    ```
 2. Install NPM packages
 
